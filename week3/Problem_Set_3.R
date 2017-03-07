@@ -39,11 +39,11 @@ sd(teenager_fr$X1960, na.rm = TRUE)
     plot_frame[5,k] <- high_income[,i]
   }
 
-#Plot matrix
+#Plot matrix: DOUBLE CHECK
   ##limits of x axis - years
     xlim <- range(c(plot_frame[1,]))
   ##Limits of y axis: range from average rates of sample mean, LIC, MIC and HIC
-    ylim <- range(c(plot_frame[2,], plot_frame[3,], plot_frame[4,], plot_frame[5,])
+    ylim <- range(c(plot_frame[2,], plot_frame[3,], plot_frame[4,], plot_frame[5,]))
   ##Plot mean rate against year
     plot(plot_frame[1,], plot_frame[2,],type = "l", col = "black", xlim = xlim, ylim = ylim, main = "Evolution of Adolescent Fertility Rate", xlab = "year", ylab = "rate")
   ##Plot LIC rate against year
@@ -52,4 +52,5 @@ sd(teenager_fr$X1960, na.rm = TRUE)
     plot(plot_frame[1,], plot_frame[4,], col = "red")
   ##Plot HIC rate against year
     plot(plot_frame[1,], plot_frame[5,], col = "yellow")
+
     
