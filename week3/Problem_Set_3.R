@@ -1,6 +1,6 @@
 rm(list=ls())
 library("utils")
-gender_data <- read.csv("C://Users//nguyetanh//Documents//MITx-14.310x//week3//Problem Set 3//Gender_Stat_Data.csv")
+gender_data <- read.csv("C://Users//nguyetanh//Documents//MITx-14.310x//week3//Gender_Stat_Data.csv")
 teenager_fr <- subset(gender_data, Indicator.Code == "SP.ADO.TFRT")
 
 #We are only interested the subset of gender_data. To remove gender_data
@@ -49,8 +49,9 @@ sd(teenager_fr$X1960, na.rm = TRUE)
   ##Plot LIC rate against year
     plot(plot_frame[1,], plot_frame[3,], col = "blue")
   ##Plot MIC rate against year
-    plot(plot_frame[1,], plot_frame[4,], col = "red")
+    line(plot_frame[1,], plot_frame[4,], type = "l", col = "red")
   ##Plot HIC rate against year
-    plot(plot_frame[1,], plot_frame[5,], col = "yellow")
-
+    line(plot_frame[1,], plot_frame[5,], type = "l", col = "yellow")
+  ##Use matplot() to combine plots into one window
+    matplot(plot_frame[1,], cbind(plot_frame[2,],plot_frame[3,],plot_frame[4,],plot_frame[5,]),type="l",col=c("black","blue","red","yellow"),lty=c(1,1), xlim = xlim, ylim = ylim, main = "Evolution of Adolescent Fertility Rate", xlab = "year", ylab = "rate")
     
