@@ -19,8 +19,9 @@ u <- runif(10000,0,1)
       
     #Plot the pdf: pdf starts the graphic driver for producing pdf graphics
       pdf("exponential.pdf")
-      plot(density_y, type = "l", xlim = c(0,2), main = "pdf of inverse exp", col = "blue", lwd = 3, xlab = "")
       hide <- dev.off()
+      plot(density_y, type = "l", xlim = c(0,2), main = "pdf of inverse exp", col = "blue", lwd = 3, xlab = "")
+      
   
   ##Approach 2: Plot the inverse of cdf of the exponential using qexp
       
@@ -39,4 +40,5 @@ u <- runif(10000,0,1)
       hide <- dev.off()
       plot(density_y_rexp, type = "l", xlim = c(0,2), main = "random draw from exp distribution", lwd = 3, col = "red", xlab = "")
       
+      #*** NOte: Need to clarify the dev.off(). Without this, plots do not show up???
       
