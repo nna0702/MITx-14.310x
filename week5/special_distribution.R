@@ -1,4 +1,4 @@
-#Exercise 1: Create cdf of exponential distribution
+#Exercise 1: Construct pdf of exponential distribution
 
 rm(list = ls())
 
