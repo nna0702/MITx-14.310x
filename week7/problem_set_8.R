@@ -6,7 +6,7 @@ library(perm)
 rm(list = ls())
 setwd("/Users/nguyetanh/Documents/MITx-14.310x/week7/")
 
-data_ps8 <- read.csv("C://Users//nguyetanh//Documents//MITx-14.310x//week7//teachers_final.csv")
+schools <- read.csv("C://Users//nguyetanh//Documents//MITx-14.310x//week7//teachers_final.csv")
 
 # Questions 1 - 4
 #-------------------------------------------------
@@ -36,26 +36,26 @@ df <- data.frame(perms,control_avg,treatment_avg,test_statistic)
 
 # Question 5 - 6
 #-------------------------------------------------
-simul_stat <- as.vector(NULL)
-schools <- read.csv('teachers_final.csv')
+simul_stat <- as.vector(NULL) #Initialise an empty vector
 
-#Set seed to get a reproducible random result
-#?? Need t clarify Pseudorandom number generation
+#Set seed to get a reproducible random result. The random numbers are the same, and they would continue to be the same no matter how far out in the sequence we went.
 set.seed(1001)
 
-#?? Still don't understand append()
+
 for(i in 1:100) {
   print(i)
-  schools$rand <- runif(100,min=0,max=1)
-  schools$treatment_rand <- as.numeric(rank(schools$rand)<=49) #pick the first 49 numbers
-  schools$control_rand = 1-schools$treatment_rand
-  simul_stat <-append(simul_stat,
-            sum(schools$treatment_rand*schools$open)/sum(schools$treatment_rand) 
-            - sum(schools$control_rand*schools$open)/sum(schools$control_rand))
+  schools$rand <- runif(100,min=0,max=1) #randomly generate 100 numbers under uniform distribution
+  schools$treatment_rand <- as.numeric(rank(schools$rand)<=49) #pick the first 49 numbers/ randomly assigned to treatment group
+  schools$control_rand = 1-schools$treatment_rand #Define control group
+  simul_stat <-append(simul_stat,sum(schools$treatment_rand*schools$open)/sum(schools$treatment_rand) - sum(schools$control_rand*schools$open)/sum(schools$control_rand)) #iterate 100 times and merge the empty vector with the vector which contains 100 results of mean difference
 }
 
 schools$control = 1-schools$treatment
+
+#Average treatment effect from the data
 actual_stat <- sum(schools$treatment*schools$open)/sum(schools$treatment) - sum(schools$control*schools$open)/sum(schools$control)
+
+#Find p-value
 sum(abs(simul_stat) >= actual_stat)/NROW(simul_stat)
 
 #Question 7 - 8
@@ -64,10 +64,11 @@ sum(abs(simul_stat) >= actual_stat)/NROW(simul_stat)
 ate <- actual_stat
 ate
 
+#Define mean of control and treatment groups
 control_mean <- sum(schools$control*schools$open)/sum(schools$control)
 treatment_mean <- sum(schools$treatment*schools$open)/sum(schools$treatment)
 
-#Estimate sample variance for control and treatment groups
+#Estimate sample variance for control and treatment groups. Multiplying by schools$control is equivalent to applying a filter to pick the relevant bits in schools$open in control group
 s_c <- (1/(sum(schools$control)-1))*sum(((schools$open-control_mean)*schools$control)^2)
 s_t <- (1/(sum(schools$treatment)-1))*sum(((schools$open-treatment_mean)*schools$treatment)^2)
 
